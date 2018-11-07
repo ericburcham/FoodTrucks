@@ -1,19 +1,20 @@
 version: "3"
 services:
   es:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.4.3
     container_name: es
     environment:
       - discovery.type=single-node
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.4.3
     ports:
       - 9200:9200
     volumes:
       - esdata1:/usr/share/elasticsearch/data
   web:
-    image: ericburcham/foodtrucks-web
+    build: ./
     command: python app.py
     depends_on:
       - es
+    image: ericburcham/foodtrucks-web
     ports:
       - 5000:5000
     volumes:
